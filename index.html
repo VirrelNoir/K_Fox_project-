@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> [PROJECT: K-FOX] </title>
+    <style>
+        @import url('https://jsdelivr.net');
+        
+        :root { 
+            --bg: #01040a; 
+            --panel: rgba(4, 14, 32, 0.9); 
+            --blue: #00f3ff; 
+            --green: #39ff14; 
+            --pink: #ff0055; 
+            --text: #c4d9fd; 
+        }
+        
+        body { 
+            background-color: var(--bg); 
+            color: var(--text); 
+            font-family: 'Vazirmatn', sans-serif; 
+            margin: 0; 
+            padding: 25px; 
+            overflow-x: hidden; 
+            position: relative; 
+        }
+        
+        #blood-canvas { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100vw; 
+            height: 100vh; 
+            z-index: 0; 
+            pointer-events: none; 
+        }
+        
+        header { text-align: center; margin-bottom: 40px; position: relative; z-index: 5; }
+        .project-codename { font-family: 'Courier New', monospace; font-size: 2.3rem; font-weight: 900; color: var(--blue); letter-spacing: 6px; margin: 10px 0; text-shadow: 0 0 10px var(--blue); }
+        .user-names { font-family: 'Courier New', monospace; font-size: 1.1rem; color: var(--green); letter-spacing: 3px; margin-bottom: 15px; text-shadow: 0 0 5px var(--green); }
+        .spy-hud { display: flex; justify-content: space-between; max-width: 1300px; margin: 0 auto 25px; padding: 10px; border-bottom: 1px solid rgba(0, 243, 255, 0.2); font-size: 0.75rem; font-family: monospace; color: var(--blue); position: relative; z-index: 5; }
+        
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 25px; max-width: 1300px; margin: 0 auto; position: relative; z-index: 5; }
+        .pod { background: var(--panel); border: 2px solid var(--blue); border-radius: 8px; padding: 20px; position: relative; box-shadow: 0 12px 30px rgba(0,0,0,0.85); transition: all 0.3s ease; backdrop-filter: blur(3px); }
+        .pod:hover { transform: translateY(-6px); box-shadow: 0 0 20px rgba(0,243,255,0.4); }
+        
+        .pod-title { font-size: 1.05rem; color: #fff; margin: 0 0 15px; font-weight: bold; border-bottom: 1px dashed rgba(0,243,255,0.3); padding-bottom: 6px; text-shadow: 0 0 5px var(--blue); }
+        .pod-link { display: block; text-align: center; background: rgba(0,243,255,0.04); color: var(--blue); text-decoration: none; padding: 9px; border: 1px solid rgba(0,243,255,0.4); border-radius: 4px; font-size: 0.8rem; font-weight: bold; margin-bottom: 12px; }
+        .pod-link:hover { background: var(--blue); color: #000; box-shadow: 0 0 8px var(--blue); }
+        
+        .todo-item { display: flex; align-items: center; margin: 10px 0; cursor: pointer; font-size: 0.9rem; }
+        .todo-item input { display: none; }
+        .custom-checkbox { width: 16px; height: 16px; border: 2px solid rgba(0,243,255,0.4); border-radius: 3px; margin-left: 10px; display: inline-block; position: relative; }
+        .todo-item input:checked + .custom-checkbox { background-color: var(--green); border-color: var(--green); }
+        .todo-item input:checked + .custom-checkbox::after { content: '✓'; color: #000; position: absolute; font-size: 13px; font-weight: bold; top: -4px; left: 1px; }
+        .todo-item input:checked ~ .todo-text { color: rgba(196,217,253,0.3); text-decoration: line-through; }
+    </style>
+</head>
+<body>
+
+<canvas id="blood-canvas"></canvas>
+
+<div class="spy-hud">
+    <div>SYSTEM CODE: <span>K-FOX // DOCK-FIXED</span></div>
+    <div>SECURITY ARCH: <span>LEVEL 5</span></div>
+</div>
+
+<header>
+    <div class="project-codename">⚡ ◤ PR0JECT_K-F0X ◢ ⚡</div>
+    <div class="user-names"><span>virrel noir</span><span style="margin: 0 30px;"></span><span>Helia</span></div>
+</header>
+
+<div class="grid" id="pods-grid">
+    <div class="pod">
+        <div class="pod-title">🧠 01 // تفکر و آموزش</div>
+        <a href="https://hku.hk" target="_blank" class="pod-link">اتصال به پورتال</a>
+        <label class="todo-item"><input type="checkbox" id="k1" onchange="sc('k1')"><span class="custom-checkbox"></span><span class="todo-text">مطالعه تفکر انتقادی</span></label>
+    </div>
+    <div class="pod">
+        <div class="pod-title">🧪 02 // روان‌شناسی علمی</div>
+        <a href="https://openstax.org" target="_blank" class="pod-link">اتصال به پورتال</a>
+        <label class="todo-item"><input type="checkbox" id="k2" onchange="sc('k2')"><span class="custom-checkbox"></span><span class="todo-text">مطالعه رفرنس</span></label>
+    </div>
+    <div class="pod">
+        <div class="pod-title">📈 03 // سواد مالی و کسب‌و‌کار</div>
+        <a href="https://khanacademy.org" target="_blank" class="pod-link">اتصال به پورتال</a>
+        <label class="todo-item"><input type="checkbox" id="k3" onchange="sc('k3')"><span class="custom-checkbox"></span><span class="todo-text">آموزش مدیریت سرمایه</span></label>
+    </div>
+    <div class="pod">
+        <div class="pod-title">🩹 04 // کمک‌های اولیه</div>
+        <a href="https://redcross.org.uk" target="_blank" class="pod-link">اتصال به پورتال</a>
+        <label class="todo-item"><input type="checkbox" id="k4" onchange="sc('k4')"><span class="custom-checkbox"></span><span class="todo-text">مرور دستورالعمل</span></label>
+    </div>
+    <div class="pod">
+        <div class="pod-title">🗣️ 05 // زبان انگلیسی</div>
+        <a href="https://bbclearningenglish.org" target="_blank" class="pod-link">اتصال به پورتال</a>
+        <label class="todo-item"><input type="checkbox" id="k5" onchange="sc('k5')"><span class="custom-checkbox"></span><span class="todo-text">تمرین لیسنینگ</span></label>
+    </div>
+    <div class="pod">
+        <div class="pod-title">♟️ 06 // شطرنج تاکتیکال</div>
+        <a href="https://lichess.org" target="_blank" class="pod-link">اتصال به پورتال</a>
+        <label class="todo-item"><input type="checkbox" id="k6" onchange="sc('k6')"><span class="custom-checkbox"></span><span class="todo-text">حل پازل‌ها</span></label>
+    </div>
+    <div class="pod">
+        <div class="pod-title">🎓 07 // دانشگاه و علوم پزشکی</div>
+        <a href="https://google.com" target="_blank" class="pod-link">پورتال دانشگاه شخصی</a>
+        <label class="todo-item"><input type="checkbox" id="k7" onchange="sc('k7')"><span class="custom-checkbox"></span><span class="todo-text">ورود به سیستم آموزشی</span></label>
+    </div>
+</div>
+
+<script>
+    function sc(id) {
+        const checkbox = document.getElementById(id);
+        localStorage.setItem(id, checkbox.checked);
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const checkboxes = document.querySelectorAll('.todo-item input[type="checkbox"]');
+        checkboxes.forEach(box => {
+            const savedState = localStorage.getItem(box.id);
+            if (savedState === 'true') { box.checked = true; }
+        });
+        initBloodRain();
+    });
+
+    function initBloodRain() {
+        const canvas = document.getElementById('blood-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        function resize() { 
+            canvas.width = window.innerWidth; 
+            canvas.height = window.innerHeight; 
+        }
+        window.addEventListener('resize', resize); 
+        resize();
+        
+        const drops = Array.from({length: 40}, () => ({
+            x: Math.random() * window.innerWidth, 
+            y: Math.random() * -window.innerHeight,
+            speed: Math.random() * 2.5 + 1.5, 
+            length: Math.random() * 20 + 15,
+            radius: Math.random() * 1.5 + 1, 
+            alpha: Math.random() * 0.5 + 0.2
+        }));
+        
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drops.forEach(drop => {
+                ctx.beginPath();
+                let gradient = ctx.createLinearGradient(drop.x, drop.y, drop.x, drop.y + drop.length);
+                gradient.addColorStop(0, "rgba(139, 0, 0, 0)");
+                gradient.addColorStop(0.7, "rgba(178, 34, 34, " + drop.alpha + ")");
+                gradient.addColorStop(1, "rgba(255, 0, 50, " + (drop.alpha + 0.2) + ")");
+                
+                ctx.fillStyle = gradient; 
+                ctx.moveTo(drop.x, drop.y);
+                ctx.lineTo(drop.x - drop.radius, drop.y + drop.length - drop.radius);
+                ctx.arc(drop.x, drop.y + drop.length, drop.radius, Math.PI, 0, false);
+                ctx.fill();
+                
+                drop.y += drop.speed;
+                if (drop.y > canvas.height) { 
+                    drop.y = -50; 
+                    drop.x = Math.random() * canvas.width; 
+                }
+            });
+            requestAnimationFrame(draw);
+        }
+        draw();
+    }
+</script>
+</body>
+</html>
